@@ -11,31 +11,30 @@ const parserOptions = {
     }
 };
 
-const tester = new RuleTester({ parserOptions });
-tester.run('jsx-no-operator', rule, {
+(new RuleTester({ parserOptions })).run('jsx-no-operator', rule, {
     valid: [
         {
-            filename: 'MyProgram.js',
+            filename: 'JSExtension.js',
             code: 'const isA = a === "a";',
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Attribute.jsx',
             code: '<div hoge="aaa" />',
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'ExpressionContainer.jsx',
             code: '<div>{"a"}</div>',
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Ternary.jsx',
             code: '<div>{isA ? "a" : "b"}</div>',
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'BinaryOperatorInComment.jsx',
             code: '<div>{isA ? "a" : "b" /* === */}</div>',
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'SFCComponent.jsx',
             code: `
                 export default props => (
                     <div {...props} />
@@ -43,7 +42,7 @@ tester.run('jsx-no-operator', rule, {
             `,
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'ClassComponent.jsx',
             code: `
                 class A extends React.Component {
                     render() {
@@ -54,65 +53,78 @@ tester.run('jsx-no-operator', rule, {
                 }
             `,
         },
+        {
+            filename: 'AssigmentOperator.jsx',
+            code: `
+                class A extends React.Component {
+                    render() {
+                        const isA = true;
+                        return (
+                            <div {...this.props} />
+                        );
+                    }
+                }
+            `,
+        },
     ],
     invalid: [
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Plus.jsx',
             code: '<div hoge={a + b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Minus.jsx',
             code: '<div hoge={a - b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Asterisk.jsx',
             code: '<div hoge={a * b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Slash.jsx',
             code: '<div hoge={a / b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Modulo.jsx',
             code: '<div hoge={a % b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Equality.jsx',
             code: '<div hoge={a == b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'StrictEquality.jsx',
             code: '<div hoge={a === b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'Inequality.jsx',
             code: '<div hoge={a != b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'StrictInequality.jsx',
             code: '<div hoge={a !== b} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'StrictEqualityWithTernaryInAttribute.jsx',
             code: '<div hoge={a === 1 ? "a" : "b"} />',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'StrictEqualityWithTernaryInExpressionContainer.jsx',
             code: '<div>{a === 1 ? "a" : "b"}</div>',
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'AsteriskInTernary.jsx',
             code: `
                 <div>
                     {props.isA
@@ -124,7 +136,7 @@ tester.run('jsx-no-operator', rule, {
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'AsteriskInDeepTernary.jsx',
             code: `
                 <div>
                     {props.isA
@@ -138,7 +150,7 @@ tester.run('jsx-no-operator', rule, {
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'StrictEqualityInClassComponent.jsx',
             code: `
                 class A extends React.Component {
                     render() {
@@ -152,7 +164,7 @@ tester.run('jsx-no-operator', rule, {
             errors: [{message: 'no operator'}],
         },
         {
-            filename: 'MyComponent.jsx',
+            filename: 'StrictEqualityInClassMethod.jsx',
             code: `
                 class A extends React.Component {
                     isA() {
