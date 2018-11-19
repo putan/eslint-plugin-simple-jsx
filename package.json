@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-simple-jsx",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "index.js",
   "repository": "git@github.com:putan/eslint-plugin-simple-jsx.git",
   "author": "putan <hiranono@gmail.com>",
