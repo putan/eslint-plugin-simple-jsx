@@ -17,7 +17,7 @@ add plugins and enable the rules at `.eslintrc`.
     "simple-jsx"
   ],
   "rules": {
-    "simple-jes/no-operator": "error"
+    "simple-jsx/no-operator": "error"
   }
 }
 ```
